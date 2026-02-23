@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{% if student %}Edit Student{% else %}Create Student{% endif %}{% endblock %}
+
+{% block content %}
+    <h2>{% if student %}Edit Student{% else %}Create New Student{% endif %}</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" name="first_name" value="{{ student.first_name or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="last_name" value="{{ student.last_name or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="{{ student.email or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" name="phone" value="{{ student.phone or '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" name="date_of_birth" value="{{ student.date_of_birth or '' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select class="form-select" name="status">
+                <option value="active" {% if student.status == 'active' or not student %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if student.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                <option value="suspended" {% if student.status == 'suspended' %}selected{% endif %}>Suspended</option>
+                <option value="graduated" {% if student.status == 'graduated' %}selected{% endif %}>Graduated</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if student %}Update{% else %}Create{% endif %}</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}
